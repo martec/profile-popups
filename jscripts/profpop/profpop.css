@@ -1,0 +1,57 @@
+.tvatar img {
+	padding: 1px;
+	border: 1px solid #D5D5D5;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.tvatar img:hover {
+	border-color: #7D7D7D;
+}
+
+.tl_c {
+	text-align: center;
+}
+
+.mask {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #FFF;
+    z-index: 800;
+    opacity: 0.5 !important;
+}
+
+.jGrowl-message hr {
+	background-color:#989898;
+}
+
+.tdprofpop {
+	vertical-align: top;
+	padding-left: 9px;
+	color: #fff;
+}
+
+.divprofpop {
+	line-height: 1.27;
+}
+
+.spprofpop {
+	font-size: 18px;
+	color: #fff;
+}
+
+.popcol {
+	color: #989898 !important;
+}
+
+.font_nm {
+	font-size: 11px;
+}
+
+.fo_b {
+	font-weight: bold;  
+}
+
+.pl5 {
+	padding-left: 5px;
+}
