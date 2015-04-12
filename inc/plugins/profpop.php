@@ -27,7 +27,7 @@ EOF;
 	return array(
 		"name"			  => "Profile Popups",
 		"description"	 => "Profile Popups for mybb 1.8",
-		"website"		 => "https://github.com/martec/profpop",
+		"website"		 => "https://github.com/martec/profile-popups",
 		"author"		=> "martec",
 		"authorsite"	=> "http://community.mybb.com/user-49058.html",
 		"version"		 => "1.0.0",
@@ -58,7 +58,7 @@ function profpop_install()
 		'description'	=> $lang->profpop_nperm_use_desc,
 		'optionscode'	=> 'groupselect',
 		'value'		=> '7',
-		'disporder'	=> '1',
+		'disporder'	=> 1,
 		'gid'		=> $groupid
 	);
 
@@ -80,7 +80,7 @@ function profpop_uninstall()
 {
 	global $db;
 
-	$db->write_query("DELETE FROM " . TABLE_PREFIX . "settings WHERE name IN('profpop_smile', 'profpop_qedit', 'profpop_quickquote', 'profpop_autosave', 'profpop_savetime', 'profpop_saveamount', 'profpop_canonicallink', 'profpop_save_lang', 'profpop_restor_lang')");
+	$db->write_query("DELETE FROM " . TABLE_PREFIX . "settings WHERE name IN('profpop_nperm_use')");
 	$db->delete_query("settinggroups", "name = 'profpop'");
 }
 
@@ -191,9 +191,9 @@ function profpop()
 
 	if($mybb->input['action'] == "profile_pop"){
 
-		if($mybb->usergroup['canviewprofiles'] == 0)
-		{
-			error_no_permission();
+		if($mybb->usergroup['canviewprofiles'] == 0 || in_array((int)$mybb->user['usergroup'],explode(',',$mybb->settings['profpop_nperm_use']))) {
+			echo $lang->profpop_no_perm;
+			exit();
 		}
 
 		$uid = $mybb->input['uid'];
@@ -201,11 +201,11 @@ function profpop()
 		$memprofile['avatar'] = htmlspecialchars_uni($memprofile['avatar']);
 		$formattedname = format_name($memprofile['username'], $memprofile['usergroup'], $memprofile['displaygroup']);
 		$usertitle = "";
-		if (!empty($memprofile['usertitle'])) { $usertitle = $memprofile['usertitle']; $usertitle = "($usertitle)";};
+		if (!empty($memprofile['usertitle'])) { $usertitle = "(".htmlspecialchars_uni($memprofile['usertitle']).")";};
 		$memregdate = my_date($mybb->settings['dateformat'], $memprofile['regdate']);
 		$memprofile['postnum'] = my_number_format($memprofile['postnum']);
 		$warning_link = "warnings.php?uid={$memprofile['uid']}";
-		$warning_level = round($memprofile['warningpoints']/$mybb->settings['maxwarningpoints']*100);
+		$warning_level = round(($memprofile['warningpoints']/( $mybb->settings['maxwarningpoints'] == 0 ? 1 : $mybb->settings['maxwarningpoints'] ))*100);
 		$memlastvisitdate = my_date($mybb->settings['dateformat'], $memprofile['lastactive']);
 		$memlastvisittime = my_date($mybb->settings['timeformat'], $memprofile['lastactive']);
 		$lang->load("member");

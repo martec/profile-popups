@@ -27,25 +27,6 @@ $.fn.profile = function(el) {
 	return false;
 }
 
-function prof_pop() {
-	$("a[href*='user-'], a[href*='member.php?action=profile&uid=']").on({
-		click: function (event) {
-			if($.inArray(parseInt(myusrgrp), grpignore.split(',').map(function(grup_ign){return Number(grup_ign);}))!=-1) {
-				event.preventDefault();
-				$.jGrowl(grpnoperm);
-			}
-			else {
-				if(!$('#profile').length) {
-					$('<div/>', { id: 'profile', class: 'center' }).appendTo('body');		
-				}
-				uid2 = parseInt($(this).attr('href').match(/(\d+)(?!.*\d)/));
-				event.preventDefault();
-				$(this).profile(uid2);
-			}
-		}
-	});
-}
-
 $(document).ready(function() {
 	$("a[href*='user-'], a[href*='member.php?action=profile&uid=']").on({
 		click: function (event) {
