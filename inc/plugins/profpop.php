@@ -30,7 +30,7 @@ EOF;
 		"website"		 => "https://github.com/martec/profile-popups",
 		"author"		=> "martec",
 		"authorsite"	=> "http://community.mybb.com/user-49058.html",
-		"version"		 => "1.0.0",
+		"version"		 => "1.0.1",
 		"compatibility" => "18*"
 	);
 }
@@ -41,8 +41,8 @@ function profpop_install()
 
 	$lang->load('config_profpop');
 
-	$query	= $db->simple_select("settinggroups", "COUNT(*) as rows");
-	$dorder = $db->fetch_field($query, 'rows') + 1;
+	$query	= $db->simple_select("settinggroups", "COUNT(*) as counts");
+	$dorder = $db->fetch_field($query, 'counts') + 1;
 
 	$groupid = $db->insert_query('settinggroups', array(
 		'name'		=> 'profpop',
@@ -70,10 +70,10 @@ function profpop_is_installed()
 {
 	global $db;
 
-	$query = $db->simple_select("settinggroups", "COUNT(*) as rows", "name = 'profpop'");
-	$rows  = $db->fetch_field($query, 'rows');
+	$query = $db->simple_select("settinggroups", "COUNT(*) as counts", "name = 'profpop'");
+	$counts  = $db->fetch_field($query, 'counts');
 
-	return ($rows > 0);
+	return ($counts > 0);
 }
 
 function profpop_uninstall()
