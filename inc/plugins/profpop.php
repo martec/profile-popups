@@ -30,7 +30,7 @@ EOF;
 		"website"		 => "https://github.com/martec/profile-popups",
 		"author"		=> "martec",
 		"authorsite"	=> "http://community.mybb.com/user-49058.html",
-		"version"		 => "1.0.1",
+		"version"		 => "1.1.1",
 		"compatibility" => "18*"
 	);
 }
